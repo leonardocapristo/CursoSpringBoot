@@ -1,8 +1,10 @@
 package cursospringboot.webservices.config;
 
+import cursospringboot.webservices.entities.Category;
 import cursospringboot.webservices.entities.Order;
 import cursospringboot.webservices.entities.User;
 import cursospringboot.webservices.entities.enums.OrderStatus;
+import cursospringboot.webservices.repositories.CategoryRepository;
 import cursospringboot.webservices.repositories.OrderRepository;
 import cursospringboot.webservices.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,9 @@ public class TestConfig implements CommandLineRunner {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CategoryRepository categoryRepository;
+
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,6 +42,13 @@ public class TestConfig implements CommandLineRunner {
         Order o3 = new Order(null, Instant.now(),OrderStatus.PAID,u1);
 
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
+
+        Category cat1 = new Category(null, "Electronics");
+        Category cat2 = new Category(null, "Books");
+        Category cat3 = new Category(null, "Computers");
+
+        categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3));
+
 
     }
 }
