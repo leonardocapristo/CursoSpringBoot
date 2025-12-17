@@ -2,6 +2,7 @@ package cursospringboot.webservices.config;
 
 import cursospringboot.webservices.entities.Order;
 import cursospringboot.webservices.entities.User;
+import cursospringboot.webservices.entities.enums.OrderStatus;
 import cursospringboot.webservices.repositories.OrderRepository;
 import cursospringboot.webservices.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,9 @@ public class TestConfig implements CommandLineRunner {
 
         userRepository.saveAll(Arrays.asList(u1,u2));
 
-        Order o1 = new Order(null, Instant.now(),u1);
-        Order o2 = new Order(null, Instant.now(),u2);
-        Order o3 = new Order(null, Instant.now(),u1);
+        Order o1 = new Order(null, Instant.now(), OrderStatus.PAID,u1);
+        Order o2 = new Order(null, Instant.now(),OrderStatus.PAID,u2);
+        Order o3 = new Order(null, Instant.now(),OrderStatus.PAID,u1);
 
         orderRepository.saveAll(Arrays.asList(o1,o2,o3));
 
