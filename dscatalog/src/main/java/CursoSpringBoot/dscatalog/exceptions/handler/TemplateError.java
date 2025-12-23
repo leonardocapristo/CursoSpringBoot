@@ -2,7 +2,7 @@ package CursoSpringBoot.dscatalog.exceptions.handler;
 
 import java.time.Instant;
 
-public class StandardError {
+public class TemplateError {
 
     private Instant timestamp;
     private Integer status;
@@ -10,7 +10,7 @@ public class StandardError {
     private String message;
     private String path;
 
-    public StandardError() {
+    public TemplateError() {
     }
 
     public Instant getTimestamp() {

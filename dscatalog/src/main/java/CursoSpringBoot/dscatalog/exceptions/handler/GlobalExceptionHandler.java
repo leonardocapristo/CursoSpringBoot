@@ -1,6 +1,6 @@
 package CursoSpringBoot.dscatalog.exceptions.handler;
 
-import CursoSpringBoot.dscatalog.exceptions.EntityNotFoundException;
+import CursoSpringBoot.dscatalog.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +13,14 @@ import java.time.Instant;
 public class GlobalExceptionHandler {
 
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
-
-        StandardError error = new StandardError();
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<TemplateError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request){
+        TemplateError error = new TemplateError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Resource not found");
+        error.setError("Recurso não encontrado");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
