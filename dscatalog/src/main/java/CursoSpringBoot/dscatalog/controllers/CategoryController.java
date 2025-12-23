@@ -1,5 +1,6 @@
 package CursoSpringBoot.dscatalog.controllers;
 
+import CursoSpringBoot.dscatalog.dto.CategoryDTO;
 import CursoSpringBoot.dscatalog.entities.Category;
 import CursoSpringBoot.dscatalog.services.CategoryService;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,9 @@ public class CategoryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Category>> findAll(){
+    public ResponseEntity<List<CategoryDTO>> findAll(){
 
-        List<Category> list = categoryService.findAll();
+        List<CategoryDTO> list = categoryService.findAll();
 
         return ResponseEntity.ok().body(list);
     }
