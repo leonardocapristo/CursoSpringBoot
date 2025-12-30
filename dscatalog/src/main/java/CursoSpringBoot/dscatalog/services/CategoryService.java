@@ -2,9 +2,12 @@ package CursoSpringBoot.dscatalog.services;
 
 import CursoSpringBoot.dscatalog.dto.CategoryDTO;
 import CursoSpringBoot.dscatalog.entities.Category;
+import CursoSpringBoot.dscatalog.exceptions.DatabaseException;
 import CursoSpringBoot.dscatalog.repositories.CategoryRepository;
 import CursoSpringBoot.dscatalog.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -64,4 +67,16 @@ public class CategoryService {
 
     }
 
+
+    public void delete(Long id) {
+        try{
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException("Id não encontrado: " + id);
+
+        }catch (DataIntegrityViolationException e){
+            throw new DatabaseException("Integridade de dados");
+        }
+
+    }
 }
