@@ -27,10 +27,7 @@ public class Account {
         return balance;
     }
 
-    public void deposit(Double amount) {
-        amount -= amount * DEPOSIT_FEE_PERCENTAGE ;
-        balance += amount;
-    }
+
 
     public void withdraw(Double amount) {
         if (amount > balance) {
@@ -46,5 +43,10 @@ public class Account {
     }
 
 
-
+    public void deposit(Double amount) {
+        if (amount > 0) {
+            amount -= amount * DEPOSIT_FEE_PERCENTAGE ;
+            balance += amount;
+        }
+    }
 }
