@@ -1,6 +1,7 @@
 package CursoSpringBoot.dscatalog.repositories;
 
 import CursoSpringBoot.dscatalog.entities.Product;
+import CursoSpringBoot.dscatalog.tests.Factory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,14 +19,27 @@ public class ProductRepositoryTests {
     @Autowired
     private ProductRepository repository;
 
-    private long nonExistingId = 1000L;
-    private long existingId = 1L;
+    private long nonExistingId;
+    private long existingId;
+    private long countTotalProducts;
 
     @BeforeEach
     void setUp() throws Exception {
 
         nonExistingId = 1000L;
         existingId = 1L;
+        countTotalProducts = 25L;
+    }
+
+    @Test
+    public void saveShouldPersistWithAutoIncrementWhenIdIsNull(){
+        Product product = Factory.createProduct();
+        product.setId(null);
+
+        product = repository.save(product);
+
+        Assertions.assertNotNull(product.getId());
+        Assertions.assertEquals(countTotalProducts + 1, product.getId());
     }
 
     @Test
@@ -45,6 +59,22 @@ public class ProductRepositoryTests {
         Assertions.assertDoesNotThrow(() -> {
             repository.deleteById(nonExistingId);
         });
+    }
+
+
+    @Test
+    public void findByIdShouldGetProductWhenIdExists(){
+        Optional<Product> result =  repository.findById(existingId);
+        Assertions.assertEquals(result.get().getId(), existingId);
+    }
+
+    @Test
+    public void findByIdShouldReturnNullProductWhenIdDoesNotExists(){
+
+        Optional<Product> result =  repository.findById(nonExistingId);
+
+        Assertions.assertTrue(result.isEmpty());
+
     }
 
 
