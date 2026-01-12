@@ -3,6 +3,7 @@ package CursoSpringBoot.dscatalog.services;
 import CursoSpringBoot.dscatalog.dto.CategoryDTO;
 import CursoSpringBoot.dscatalog.dto.RoleDTO;
 import CursoSpringBoot.dscatalog.dto.UserDTO;
+import CursoSpringBoot.dscatalog.dto.UserInsertDTO;
 import CursoSpringBoot.dscatalog.entities.Category;
 import CursoSpringBoot.dscatalog.entities.Role;
 import CursoSpringBoot.dscatalog.entities.User;
@@ -17,6 +18,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +28,9 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository repository;
@@ -60,9 +65,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO dto) {
+    public UserDTO insert(UserInsertDTO dto) {
         User entity = new User();
         copyDtoToEntity(dto, entity);
+        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
         entity = repository.save(entity);
         return new UserDTO(entity);
     }
