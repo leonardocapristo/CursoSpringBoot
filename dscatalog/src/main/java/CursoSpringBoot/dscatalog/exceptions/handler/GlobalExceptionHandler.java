@@ -5,6 +5,7 @@ import CursoSpringBoot.dscatalog.exceptions.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -20,7 +21,7 @@ public class  GlobalExceptionHandler {
         TemplateError error = new TemplateError();
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
-        error.setError("Recurso não encontrado");
+        error.setError("Resource Not Found Exception");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
@@ -33,7 +34,20 @@ public class  GlobalExceptionHandler {
         TemplateError error = new TemplateError();
         error.setTimestamp(Instant.now());
         error.setStatus(status.value());
-        error.setError("Integridade de dados");
+        error.setError("Database Exception");
+        error.setMessage(e.getMessage());
+        error.setPath(request.getRequestURI());
+
+        return ResponseEntity.status(status).body(error);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<TemplateError> methodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request){
+        HttpStatus status = HttpStatus.UNPROCESSABLE_CONTENT;
+        TemplateError error = new TemplateError();
+        error.setTimestamp(Instant.now());
+        error.setStatus(status.value());
+        error.setError("Validation Exception");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
 
