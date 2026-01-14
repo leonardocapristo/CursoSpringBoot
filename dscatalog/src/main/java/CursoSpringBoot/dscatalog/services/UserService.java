@@ -1,9 +1,6 @@
 package CursoSpringBoot.dscatalog.services;
 
-import CursoSpringBoot.dscatalog.dto.CategoryDTO;
-import CursoSpringBoot.dscatalog.dto.RoleDTO;
-import CursoSpringBoot.dscatalog.dto.UserDTO;
-import CursoSpringBoot.dscatalog.dto.UserInsertDTO;
+import CursoSpringBoot.dscatalog.dto.*;
 import CursoSpringBoot.dscatalog.entities.Category;
 import CursoSpringBoot.dscatalog.entities.Role;
 import CursoSpringBoot.dscatalog.entities.User;
@@ -75,7 +72,7 @@ public class UserService {
 
 
     @Transactional
-    public UserDTO update(Long id, UserDTO dto) {
+    public UserDTO update(Long id, UserUpdateDTO dto) {
     try {
         User entity = repository.getReferenceById(id);
         copyDtoToEntity(dto, entity);

@@ -2,6 +2,7 @@ package CursoSpringBoot.dscatalog.controllers;
 
 import CursoSpringBoot.dscatalog.dto.UserDTO;
 import CursoSpringBoot.dscatalog.dto.UserInsertDTO;
+import CursoSpringBoot.dscatalog.dto.UserUpdateDTO;
 import CursoSpringBoot.dscatalog.services.UserService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -50,10 +51,10 @@ public class UserController {
     }
 
     @PutMapping(value = "/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserDTO dto){
+    public ResponseEntity<UserDTO> update(@PathVariable Long id, @Valid @RequestBody UserUpdateDTO dto){
 
-        dto = service.update(id,dto);
-        return ResponseEntity.ok().body(dto);
+        UserDTO newDto = service.update(id,dto);
+        return ResponseEntity.ok().body(newDto);
 
     }
 
