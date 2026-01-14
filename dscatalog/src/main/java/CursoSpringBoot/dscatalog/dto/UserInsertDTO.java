@@ -1,5 +1,8 @@
 package CursoSpringBoot.dscatalog.dto;
 
+import CursoSpringBoot.dscatalog.services.validation.UserInsertValid;
+
+@UserInsertValid
 public class UserInsertDTO extends UserDTO{
 
     private String password;
