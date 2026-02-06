@@ -1,5 +1,6 @@
 package cursospringboot.springsecurity.services;
 
+import cursospringboot.springsecurity.config.TokenConfig;
 import cursospringboot.springsecurity.dto.request.RegisterUserRequest;
 import cursospringboot.springsecurity.dto.response.RegisterUserResponse;
 import cursospringboot.springsecurity.entities.User;
@@ -24,6 +25,9 @@ public class UserServices implements UserDetailsService {
     @Autowired
     AuthenticationManager authenticationManager;
 
+    @Autowired
+    TokenConfig tokenConfig;
+
 
     public RegisterUserResponse register(RegisterUserRequest registerUserRequest){
 
@@ -41,5 +45,9 @@ public class UserServices implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return repository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException(username));
+    }
+
+    public String generateToken(User user){
+        return tokenConfig.generateToken(user);
     }
 }

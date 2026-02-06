@@ -4,6 +4,7 @@ import cursospringboot.springsecurity.dto.request.LoginRequest;
 import cursospringboot.springsecurity.dto.request.RegisterUserRequest;
 import cursospringboot.springsecurity.dto.response.LoginResponse;
 import cursospringboot.springsecurity.dto.response.RegisterUserResponse;
+import cursospringboot.springsecurity.entities.User;
 import cursospringboot.springsecurity.services.UserServices;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,10 @@ public class AuthController {
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(loginRequest.email(),loginRequest.password());
         Authentication auth = authenticationManager.authenticate(userAndPass);
 
-        return null;
+        User user = (User) auth.getPrincipal();
+        String token = services.generateToken(user);
+
+        return ResponseEntity.ok(new LoginResponse(token));
     }
 
     @PostMapping(value = "/register")
