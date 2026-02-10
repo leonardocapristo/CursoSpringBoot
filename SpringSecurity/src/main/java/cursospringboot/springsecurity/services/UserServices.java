@@ -23,9 +23,6 @@ public class UserServices implements UserDetailsService {
     PasswordEncoder passwordEncoder;
 
     @Autowired
-    AuthenticationManager authenticationManager;
-
-    @Autowired
     TokenConfig tokenConfig;
 
 
