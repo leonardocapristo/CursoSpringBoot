@@ -81,5 +81,6 @@ public class Product {
     public Set<Category> getCategories() {
         return categories;
     }
+    
 
 }
