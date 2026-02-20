@@ -81,6 +81,14 @@ public class Product {
     public Set<Category> getCategories() {
         return categories;
     }
+
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
     
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
+    }
 
 }
